@@ -1,0 +1,6 @@
+beets/ 
+venv/ 
+beetslib/ 
+library.db
+beetsconf.yml 
+__pycache*
