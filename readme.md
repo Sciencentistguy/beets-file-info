@@ -1,0 +1,3 @@
+# FileInfo plugin
+---
+
