@@ -66,7 +66,7 @@ def stats(lib, opts, args):
         return
     if non_lossless != 0:
         print(f"{non_lossless} items are not lossless ({(non_lossless / len(items)) * 100:.2f}%).")
-    for key, count in sorted(info.items(), key=lambda item: item[1]):
+    for key, count in sorted(info.items(), key=lambda item: item[1])[::-1]:
         print(f"{count} items are {key} ({(count / len(items)) * 100:.2f}%)")
 
 
