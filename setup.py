@@ -7,8 +7,8 @@ with open(path.join(here, './readme.md')) as f:
     readme = f.read()
 
 setup(
-    name='beets-fileinfo',
-    version='0.0.1',
+    name='beets-file-info',
+    version='1.0',
     description='Plugin for the music library manager Beets, to tag sample rates and bit depths.',
     long_description=readme,
     url='https://github.com/Sciencentistguy/BeetsFileInfo',

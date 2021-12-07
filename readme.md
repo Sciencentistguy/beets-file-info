@@ -1,3 +1,3 @@
-# FileInfo plugin
+# beets-file-info plugin
 ---
 
