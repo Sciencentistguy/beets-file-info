@@ -15,9 +15,9 @@ setup(
     download_url='https://github.com/Sciencentistguy/BeetsFileInfo.git',
     author='Jamie Quigley',
     author_email='jamie@quigley.xyz',
-    license='GPLv3',
+    license='MPL-2.0',
     classifiers=[
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: MPL-2.0 License',
         'Programming Language :: Python :: 3',
     ],
     keywords='beets bitdepth',
