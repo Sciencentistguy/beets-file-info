@@ -78,11 +78,11 @@ def stats(lib, opts, args):
     print(
         f"{non_lossless} items are not lossless ({(non_lossless / len(items)) * 100:.2f}%)."
     )
-    for key, count in sorted(info.items(), key=lambda item: item[1])[::-1]:
+    for key, count in sorted(info.items(), key=lambda item: item[0])[::-1]:
         print(f"{count} items are {key} ({(count / len(items)) * 100:.2f}%)")
 
 
-fileinfo_cmd.func = base
+fileinfo_cmd.func = base  # type: ignore
 
 
 class FileInfo(BeetsPlugin):

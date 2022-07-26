@@ -4,3 +4,4 @@ beetslib/
 library.db
 beetsconf.yml 
 __pycache*
+*.egg-info
