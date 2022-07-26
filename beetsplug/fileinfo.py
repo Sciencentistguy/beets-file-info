@@ -6,26 +6,32 @@ from beets.library import Library
 from beets.library import Item
 
 fileinfo_cmd = Subcommand(
-    "fileinfo",
+    "file-info",
     # parser=parser,
-    help="Read and write file info tags (bitdepth and sample rate). Subcommands are ls and stats",
+    help="Display information about the file formats of your library",
     aliases=("fi"),
 )
 
 
-def base(lib, opts, args):
+def usage():
+    print("usage: beet file-info [subcommand]")
+    print("Available subcommands:")
+    print("  ls")
+    print("  stats")
+
+
+def dispatch(lib, opts, args):
     try:
-        cmd = args[0]
-    except BaseException:
-        print("Unknown subcommand. Available commands are: ls, and stats")
+        match args[0]:
+            case "ls":
+                ls(lib, opts, args[1:])
+            case "stats":
+                stats(lib, opts, args[1:])
+            case _:
+                usage()
+    except IndexError:
+        usage()
         return
-    if cmd == "ls":
-        ls(lib, opts, args[1:])
-        return
-    if cmd == "stats":
-        stats(lib, opts, args[1:])
-        return
-    print("Unknown subcommand. Available commands are: ls, and stats")
 
 
 def ls(lib: Library, opts, args):
@@ -76,13 +82,13 @@ def stats(lib, opts, args):
     if len(items) == 0:
         return
     print(
-        f"{non_lossless} items are not lossless ({(non_lossless / len(items)) * 100:.2f}%)."
+        f"! {non_lossless} items are not lossless ({(non_lossless / len(items)) * 100:.2f}%) !\n"
     )
     for key, count in sorted(info.items(), key=lambda item: item[0])[::-1]:
         print(f"{count} items are {key} ({(count / len(items)) * 100:.2f}%)")
 
 
-fileinfo_cmd.func = base  # type: ignore
+fileinfo_cmd.func = dispatch  # type: ignore
 
 
 class FileInfo(BeetsPlugin):
