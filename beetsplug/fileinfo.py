@@ -7,7 +7,6 @@ from beets.library import Item
 
 fileinfo_cmd = Subcommand(
     "file-info",
-    # parser=parser,
     help="Display information about the file formats of your library",
     aliases=("fi"),
 )
@@ -34,19 +33,13 @@ def dispatch(lib, opts, args):
         return
 
 
-def ls(lib: Library, opts, args):
+def ls(lib: Library, _opts, args):
     items: Results = lib.items(" ".join(args))
     item: Item
     for item in items:
         path = item.destination().decode("utf-8")
         ext = path[path.rfind(".") + 1 :].upper()
-        is_lossless: bool = ext in [
-            "FLAC",
-            "ALAC",
-            "WAV",
-        ]
-        #  item.
-        # ; any(ext in path for ext in ["flac", "alac", "wav"])
+        is_lossless: bool = ext in ["FLAC", "ALAC", "WAV"]
         bit_depth = item.bitdepth
         sample_rate = round(float(cast(SupportsFloat, item.samplerate)) / 1000, 1)
         bit_rate_kbps = round(float(cast(SupportsFloat, item.bitrate)) / 1000, 1)
@@ -57,7 +50,7 @@ def ls(lib: Library, opts, args):
             print(f"{bit_rate_kbps}kbps")
 
 
-def stats(lib, opts, args):
+def stats(lib, _opts, args):
     items: Results = lib.items(" ".join(args))
     info: dict[str, int] = {}
     non_lossless = 0
@@ -81,9 +74,10 @@ def stats(lib, opts, args):
 
     if len(items) == 0:
         return
-    print(
-        f"! {non_lossless} items are not lossless ({(non_lossless / len(items)) * 100:.2f}%) !\n"
-    )
+
+    if non_lossless > 0:
+        percentage = (non_lossless / len(items)) * 100
+        print(f"! {non_lossless} items are not lossless ({percentage:.2f}%) !\n")
     for key, count in sorted(info.items(), key=lambda item: item[0])[::-1]:
         print(f"{count} items are {key} ({(count / len(items)) * 100:.2f}%)")
 
